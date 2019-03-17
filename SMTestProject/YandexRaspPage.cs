@@ -6,30 +6,36 @@ using SeleniumExtras.PageObjects;
 
 namespace SCTestApp.Pages
 {
-    public class YandexRaspPage
+    public class YandexRaspPage : BasePage
     {
-        protected IWebDriver driver;
-
         /// <summary>
-        /// Станция отправления
+        /// Поле "Откуда"
         /// </summary>
         [FindsBy(How = How.Id, Using = "from")]
         public IWebElement fromInput;
 
         /// <summary>
-        /// Станция прибытия
+        /// Поле "Куда"
         /// </summary>
         [FindsBy(How = How.Id, Using = "to")]
         public IWebElement toInput;
 
         /// <summary>
-        /// Время 
+        /// Поле "Когда" 
         /// </summary>
         [FindsBy(How = How.Id, Using = "when")]
         public IWebElement whenInput;
 
+        /// <summary>
+        /// Кнопка "Найти"
+        /// </summary>
         [FindsBy(How = How.XPath, Using = "//button[contains(@class, 'SearchForm__submit')]")]
         public IWebElement submitButton;
+
+        public YandexRaspPage(IWebDriver driver) : base(driver)
+        {
+
+        }
 
         /// <summary>
         /// Осуществляет поиск
@@ -56,12 +62,6 @@ namespace SCTestApp.Pages
             return p;
         }
 
-        public YandexRaspPage(IWebDriver driver)
-        {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
-        }
-
         public virtual void WaitUntilLoads()
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(10)).
@@ -75,6 +75,9 @@ namespace SCTestApp.Pages
 
     public class YandexRaspResultsPage : YandexRaspPage
     {
+        /// <summary>
+        /// Заголовок результатов поиска
+        /// </summary>
         [FindsBy(How = How.ClassName, Using = "SearchHeader")]
         public IWebElement resultsListHeader;
 
@@ -93,11 +96,17 @@ namespace SCTestApp.Pages
                 );
         }
 
+        /// <summary>
+        /// Возвращает заголовок списка результатов (без цены и даты)
+        /// </summary>
         public string GetResultsHeaderName()
         {
             return resultsListHeader.FindElement(By.XPath("./header[@class = 'SearchTitle']//h1/span")).Text;
         }
 
+        /// <summary>
+        /// Возвращает дату из заголовка списка результатов
+        /// </summary>
         public string GetResultsHeaderDateString()
         {
             return resultsListHeader.FindElement(By.XPath(".//span[@class = 'SearchTitle__subtitle']")).Text;

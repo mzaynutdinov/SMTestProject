@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasePage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="YandexHomePage.cs" />
     <Compile Include="YandexRaspPage.cs" />

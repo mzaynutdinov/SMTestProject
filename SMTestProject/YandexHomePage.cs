@@ -9,20 +9,17 @@ using System.Threading.Tasks;
 
 namespace SCTestApp.Pages
 {
-    class YandexHomePage
+    class YandexHomePage : BasePage
     {
-        private IWebDriver driver;
-
         [FindsBy(How = How.XPath, Using = "//a[contains(@class, 'home-link') and text() = 'Расписания']")]
         public IWebElement raspLink;
 
-        public YandexHomePage(IWebDriver driver)
+        public YandexHomePage(IWebDriver driver) : base(driver)
         {
-            this.driver = driver;
-            PageFactory.InitElements(driver, this);
+
         }
 
-        public void Navigate()
+        public override void Navigate()
         {
             driver.Navigate().GoToUrl("http://yandex.ru");
         }
